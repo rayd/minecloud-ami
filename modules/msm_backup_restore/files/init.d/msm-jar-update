@@ -44,16 +44,9 @@ do_start()
 		$UPDATE_DOWNLOAD_URL
 	fi
 
-	# Download latest server.jar and set symlink
-	# Note: I'm using hard-coded <server> and <jargroup> names.
-	SERVER='default'
-	JARGROUP='minecraft'
-	MSM='/usr/local/bin/msm'
-	if [ -x $MSM ]; then
-		$MSM $SERVER jar $JARGROUP
-	else
-		return 2
-	fi
+	# Create symlink
+	rm /opt/msm/servers/default/server.jar
+	sudo -u minecraft ln -s /opt/msm/servers/default/Tekkit.jar /opt/msm/servers/default/server.jar
 }
 
 #

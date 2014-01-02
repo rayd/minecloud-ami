@@ -55,6 +55,7 @@ do_start()
     RESTORE_SCRIPT=/usr/local/bin/msm-manage-restore-working-files-from-s3.py
 	if [ -x $RESTORE_SCRIPT ]; then
 		$VENV_PYTHON $RESTORE_SCRIPT
+        sudo -u minecraft touch /opt/msm/servers/default/active
 	else
 		return 2
 	fi

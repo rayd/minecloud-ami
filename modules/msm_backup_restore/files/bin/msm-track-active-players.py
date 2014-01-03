@@ -13,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.pool import NullPool
 
-# Convert from Heroku style DATABASE_URL to Sqlalchemy style, if necessary 
+# Convert from Heroku style DATABASE_URL to Sqlalchemy style, if necessary
 db_url = os.environ.get('DATABASE_URL')
 DATABASE_URL = re.sub('^postgres:', 'postgresql:', db_url)
 
@@ -29,16 +29,16 @@ class Instance(Base):
     """"""
     __tablename__ = 'launcher_instance'
     __table_args__ = {'autoload':True}
- 
+
 class MCSession(Base):
     """"""
     __tablename__ = 'launcher_session'
     __table_args__ = {'autoload':True}
 
-# Add foreign key relationships    
+# Add foreign key relationships
 MCSession.user = relationship(User, primaryjoin=MCSession.user_id == User.id)
 MCSession.instance = relationship(Instance, primaryjoin=MCSession.instance_id == Instance.id)
- 
+
 def loadSession():
     """"""
     metadata = Base.metadata
@@ -103,10 +103,10 @@ def main():
         logout_match = logout_regex.search(line)
         if login_match:
             (date, player_name, ip) = login_match.groups()
-            login(session, player_name, date)
+            login(session, player_name.lower(), date)
         elif logout_match:
             (date, player_name) = logout_match.groups()
-            logout(session, player_name, date)
+            logout(session, player_name.lower(), date)
 
 
 if __name__ == "__main__":
